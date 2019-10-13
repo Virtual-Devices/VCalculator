@@ -143,3 +143,64 @@ void calculateA() {
 		calculations.push_back(current);
 	}
 }
+
+void calculateB() {
+	isReset = true;
+	if (!isOperandB)
+	{
+		deleteZeros();
+		stringstream ss;
+		ss << current;
+		ss >> valueB;
+
+
+		if (isOperandA)
+		{
+			//calculations.push_back(strA);
+			strA = "";
+			isOperandA = false;
+		}
+		else
+		{
+			calculations.push_back(current);
+		}
+
+		switch (operandB)
+		{
+			
+		case '+':
+			valueA += valueB;
+			break;
+		case '-':
+			valueA -= valueB;
+			break;
+		case '/':
+			if (valueB == 0.0)
+			{
+				isNaN = true;
+				current = "NaN";
+				return;
+			}
+			valueA /= valueB;
+			break;
+		case '*':
+			valueA *= valueB;
+			break;
+		default:
+			valueA = valueB;
+			break;
+		}
+
+		isOperandB = true;
+		ss.str("");
+		ss.clear();
+		ss << valueA;
+		current = ss.str();
+	}
+	else
+	{
+		if (calculations.size() != 0)
+			calculations.pop_back();
+	}
+
+}
