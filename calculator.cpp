@@ -62,4 +62,84 @@ double valueB = 0;
 int beforeX = -1;
 int beforeY = -1;
 
+void calculateA() {
 
+	isReset = true;
+	isOperandA = true;
+	isOperandB = false;
+	
+	deleteZeros();
+	stringstream ss;
+	ss << current;
+	ss >> valueB;	
+
+	switch (operandA)
+	{
+			// negative
+	case 'n':
+		valueB *= -1;
+		if (strA.empty())
+		{
+			strA = "neg(" + current + ")";
+			calculations.push_back(strA);
+		}
+		else
+		{
+			strA = "neg(" + strA + ")";
+			calculations[calculations.size() - 1] = strA;
+		}
+		break;
+			//sqrt
+	case 's':
+		if (valueB < 0)
+		{
+			isNaN = true;
+			current = "NaN";
+			return;
+		}
+		valueB = sqrt(valueB);
+		if (strA.empty())
+		{
+			strA = "sqrt(" + current + ")";
+			calculations.push_back(strA);
+		}
+		else
+		{
+			strA = "sqrt(" + strA + ")";
+			calculations[calculations.size() - 1] = strA;
+		}
+		break;
+			//recipro
+	case '1':
+		if (valueB == 0.0)
+		{
+			isNaN = true;
+			current = "NaN";
+			return;
+		}
+		valueB = 1.0 / valueB;
+		if (strA.empty())
+		{
+			strA = "rec(" + current + ")";
+			calculations.push_back(strA);
+		}
+		else
+		{
+			strA = "rec(" + strA + ")";
+			calculations[calculations.size() - 1] = strA;
+		}
+		break;
+			//mod
+	case '%':
+		valueB = valueA*valueB / 100.0;
+		break;
+	}
+	ss.str("");
+	ss.clear();
+	ss << valueB;
+	current = ss.str();
+	if (operandA == '%')
+	{
+		calculations.push_back(current);
+	}
+}
