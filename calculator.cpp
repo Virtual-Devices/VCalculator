@@ -62,6 +62,23 @@ double valueB = 0;
 int beforeX = -1;
 int beforeY = -1;
 
+void deleteZeros() {
+	if (isComma)
+	{
+		while (current.at(current.length() - 1) == '0' || current.at(current.length() - 1) == '.')
+		{
+			if (current.length() != 1)
+			{
+				current.erase(current.length() - 1, 1);
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+}
+
 void calculateA() {
 
 	isReset = true;
